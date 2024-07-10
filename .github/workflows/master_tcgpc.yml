@@ -42,7 +42,9 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-    
+    permissions:
+      id-token: write #This is required for requesting the JWT
+
     steps:
       - name: Download artifact from build job
         uses: actions/download-artifact@v3
@@ -52,6 +54,13 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
       
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_63E9477ACD5748B58FE6DA5BA2A0FE29 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_94AF80F8419345E991FDC68A610A9269 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C4106D6F468F4194A7C40694E5147207 }}
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -59,4 +68,4 @@ jobs:
           app-name: 'tcgpc'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2BEF54BC09B24D2ABC3DFC3D4628FBFF }}
+          
