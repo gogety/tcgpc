@@ -31,6 +31,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-node": "^5.2.0",
 		"node-cache": "^5.1.2",
 		"svelte-adapter-azure-swa": "^0.20.0"
 	}
