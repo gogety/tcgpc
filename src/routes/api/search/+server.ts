@@ -67,6 +67,10 @@ export async function GET({ url }) {
 
   // try to get cached data for the search first
   let data = cache.get(searchTerm);
+  if (data){
+    console.log("got cached data");
+    return json(data);
+  }
 
   // if unable to get cached data, fetch it from the API
   if (!data) {
@@ -78,7 +82,6 @@ export async function GET({ url }) {
       if (!data) {
         error(404, 'No results found');
       }
-      cache.set(searchTerm, data)
     }
     catch (err) {
       console.error('Error fetching data:', err);
@@ -120,6 +123,11 @@ export async function GET({ url }) {
   //     });
   //   }
   // });
+
+  if (resu){
+    cache.set(searchTerm, resu)
+  }
+
   return json(resu);
   // return new Response(String(random));
 }
