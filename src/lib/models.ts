@@ -10,3 +10,9 @@ export interface Card {
     Finish: string,
   }]
 }
+
+export interface Finish {
+    Price: number,
+    InStock: boolean,
+    Finish: string,
+}

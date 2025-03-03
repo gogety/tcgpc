@@ -109,7 +109,7 @@ export async function GET({ url }) {
         InStock: (v.child_inventory_level?.length > 0 && v.child_inventory_level?.[0] >0),
         Finish: v.option_finish?.[0] ?? "Unknown"
       }
-    }) ?? [],
+    })?.sort((a, b) => a.Finish.localeCompare(b.Finish, undefined, { numeric: true })) ?? [],
   } as Card));
   // resu.forEach((r) => {
   //   const values = r.Document?.hawk_child_attributes?.filter((matches) => matches.option_condition == 'NM');
