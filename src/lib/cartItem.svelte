@@ -16,7 +16,7 @@
 <tr>
 	{#if showImage}
 		<td>
-			<img height="200px" src={card.Image} />
+			<img height="200px" src={card.Image} alt={card.CardName} />
 		</td>
 		<td>
 			<div style="font-weight: bold">{card.SetName}</div>
