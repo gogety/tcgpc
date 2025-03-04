@@ -12,6 +12,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read #This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +33,7 @@ jobs:
         run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: release.zip
@@ -44,10 +46,11 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: node-app
 
@@ -55,15 +58,15 @@ jobs:
         run: unzip release.zip
       
       - name: Login to Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_63E9477ACD5748B58FE6DA5BA2A0FE29 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_94AF80F8419345E991FDC68A610A9269 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C4106D6F468F4194A7C40694E5147207 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_DEE8E0518EBC4A1B91E331102809B104 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E22DEAF094CB4DDF8C795FE0DA115606 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_58BFE6750DC5422EA02DD111936F7C46 }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: 'tcgpc'
           slot-name: 'Production'
