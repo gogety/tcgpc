@@ -76,8 +76,6 @@ export async function GET({ url }) {
   if (!data) {
     try{
       data = await fetchData(searchTerm);
-      console.log("got here");
-      console.log(data);
 
       if (!data) {
         error(404, 'No results found');

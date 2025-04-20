@@ -16,16 +16,16 @@
 <tr>
 	{#if showImage}
 		<td>
-			<img height="200px" src={card.Image} alt={card.CardName} />
+			<img height="200px" src={finish.Image} alt={card.CardName} />
 		</td>
 		<td>
-			<div style="font-weight: bold">{card.SetName}</div>
+			<div style="font-weight: bold">{card.SetName}{card.Qualifiers.length>0?" ("+card.Qualifiers.join(",")+")":""}</div>
 			<div>{finish.Finish}</div>
 		</td>
 	{/if}
 	{#if !showImage}
 		<td>
-			<div style="font-weight: bold">{card.CardName}</div>
+			<div style="font-weight: bold">{card.CardName}{card.Qualifiers.length>0?" ("+card.Qualifiers.join(",")+")":""}</div>
 			<div>{card.SetName}</div>
 			<div>{finish.Finish}</div>
 		</td>

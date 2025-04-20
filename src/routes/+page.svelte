@@ -1,10 +1,25 @@
 <script lang="ts">
 	import Cart from '$lib/cart.svelte';
 	import Search from '$lib/search.svelte';
+	import { onMount } from 'svelte';
 
 	let showImages = true;
 	let cart:any[] = []; // List to selected cards finishes
 	let currentPage = 'search'; // Tracks the current page ('search' or 'cart')
+
+	let isMounted = false;
+	onMount(() => {
+    // Load cart from localStorage if it exists
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      cart = JSON.parse(storedCart);
+    }
+		isMounted = true;
+  });
+	
+	$: if (isMounted && cart){
+		localStorage.setItem('cart', JSON.stringify(cart));
+	};
 
 	// Function to handle adding a finish to the list
 	const addToCart = (cardToAdd, value) => {
@@ -12,6 +27,11 @@
 			cart = [...cart, { card: cardToAdd, finish: value }];
 		}
 	};
+
+	const clearCart = () => {
+		cart = [];	
+		localStorage.removeItem('cart');
+	}
 
 	  // Calculate the total price of the cart
 	$: totalPrice = cart.reduce((sum, item) => sum + item?.finish?.Price, 0);
@@ -28,7 +48,7 @@
 {/if}
 
 {#if currentPage === 'cart'}
-	<Cart {cart} {showImages} {removeFromCart} {totalPrice}/>
+	<Cart {cart} {showImages} {removeFromCart} {totalPrice} {clearCart}/>
 {/if}
 
 <div class="tab-bar">

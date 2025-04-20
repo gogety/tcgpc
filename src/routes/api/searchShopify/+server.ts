@@ -53,8 +53,6 @@ export async function GET({ url }) {
   if (!data) {
     try{
       data = await fetchData(searchTerm);
-      console.log("got here");
-      console.log(data);
 
       if (!data) {
         error(404, 'No results found');
@@ -62,7 +60,7 @@ export async function GET({ url }) {
     }
     catch (err) {
       console.error('Error fetching data:', err);
-      error(500, `Error fetching data ${err}`);
+      error(err.status, `Error fetching data ${err}`);
     }
   }   
 
@@ -106,7 +104,7 @@ export async function GET({ url }) {
 
   // Sort cards by the finish in their values
   filteredCards.forEach((card) => {
-    card.Values?.sort((a, b) => b.Finish.localeCompare(a.Finish, undefined, { numeric: true }));
+    card.Values?.sort((a, b) => b?.Finish?.localeCompare(a?.Finish, undefined, { numeric: true }));
     // Set the card image to the first value image
     if (card.Values?.length > 0) {
       card.Image = card.Values[0].Image;

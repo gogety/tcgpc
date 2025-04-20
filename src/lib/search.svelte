@@ -31,7 +31,10 @@
 
 	async function search(term:string) {
 		const response = await fetch(`/api/searchShopify?term=${term}`);
-		if (response.status !== 200) {
+		if(response.status === 404) {
+			errorFromBackend = 'No results.';
+		} 
+		else if (response.status !== 200) {
 			errorFromBackend = response.statusText;
 		} else {
 			results = await response.json();
