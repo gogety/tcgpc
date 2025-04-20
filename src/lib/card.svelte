@@ -24,7 +24,7 @@
     </td>
     <!-- <td>{card.CardName}</td> -->
     <td>
-      <div style="font-weight: bold">{card.SetName}</div>
+      <div style="font-weight: bold">{card.SetName} {card.Qualifiers.length>0?"("+card.Qualifiers.join(",")+")":""}</div>
       <table>
       {#each card.Values as value}
         <tr>

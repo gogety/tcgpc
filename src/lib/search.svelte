@@ -30,7 +30,7 @@
 	}
 
 	async function search(term:string) {
-		const response = await fetch(`/api/search?term=${term}`);
+		const response = await fetch(`/api/searchShopify?term=${term}`);
 		if (response.status !== 200) {
 			errorFromBackend = response.statusText;
 		} else {
@@ -72,30 +72,41 @@
 		}}
 		aria-label="Close modal"
 	></button>
+
 	<div class="modal">
-		<h2>{selectedCard.SetName}</h2>
+		<div style="display: flex; justify-content: space-between; align-items: center;">
+			<h3>{selectedCard.SetName}</h3>
+			<span 
+				style="cursor: pointer; font-size: 20px;" 
+				on:click={() => {
+					selectedCard = null;
+				}}
+			>❌</span>
+		</div>
 		<div>
-			<table>
-				<tr>
-					<td>
-						<img height="300px" src={selectedCard.Image} alt={selectedCard.SetName} />
-					</td>
-					<td>
+			<div style="overflow-x: auto; max-width: 100%;">
+				<table>
+					<tr>
 						{#each selectedCard.Values as value}
-							<div>
-								<button
-									on:click={() => {
-										setTimeout(() => (selectedCard = null), 0);
-										addToCart(selectedCard, value);
-									}}
-									><div>{value.Finish}</div>
-									(${value.Price})</button
-								>
+						<td style="vertical-align: top;">
+							<div class="card-container">
+								<img class="card-image" src={value.Image} alt={selectedCard.SetName} />
+								<div class="card-button">
+									<button
+										on:click={() => {
+											setTimeout(() => (selectedCard = null), 0);
+											addToCart(selectedCard, value);
+										}}
+									>
+										Add {value.Finish} (${value.Price})
+									</button>
+								</div>
 							</div>
+						</td>
 						{/each}
-					</td>
-				</tr>
-			</table>
+					</tr>
+				</table>
+			</div>
 		</div>
 		<!-- <button on:click={handleClose}>Close</button> -->
 	</div>
@@ -174,6 +185,10 @@
 		z-index: 1000;
 		width: 90%;
 		align-content: center;
+		max-height: 100%;
+		overflow-y: hidden;
+		overflow-x: auto; 
+		max-width: 100%;
 	}
 	.overlay {
 		position: fixed;
@@ -183,11 +198,27 @@
 		height: 100%;
 		background: rgba(0, 0, 0, 0.5);
 		z-index: 999;
+		touch-action: none; /* block gestures */
+		overflow: hidden;
 	}
 
 	button {
 		/* height: 30px; */
 		font-size: 18px;
-		width: 150px;
+		width: 100%;
+		height: 50px;
+	}
+	.card-container {
+		text-align: center;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		height: 405px; /* Ensure consistent height for alignment */
+	}
+
+	.card-image {
+		max-height: 350px;
+		object-fit: contain;
 	}
 </style>

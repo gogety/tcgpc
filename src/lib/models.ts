@@ -9,10 +9,12 @@ export interface Card {
     InStock: boolean,
     Finish: string,
   }]
+  Qualifiers: string[]
 }
 
 export interface Finish {
     Price: number,
     InStock: boolean,
     Finish: string,
+    Image: string
 }
