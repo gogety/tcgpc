@@ -101,10 +101,14 @@ export async function GET({ url }) {
 
   // Remove cards that do not have values
   const filteredCards = mergedCards.filter((card) => card.Values.length > 0);
-
   // Sort cards by the finish in their values
   filteredCards.forEach((card) => {
-    card.Values?.sort((a, b) => b?.Finish?.localeCompare(a?.Finish, undefined, { numeric: true }));
+    try{
+      card.Values?.sort((a, b) => b?.Finish?.localeCompare(a?.Finish, undefined, { numeric: true }));
+    }
+    catch (err) {
+      console.error(`Error sorting values for card ${card.CardName}:`, err);
+    }
     // Set the card image to the first value image
     if (card.Values?.length > 0) {
       card.Image = card.Values[0].Image;
