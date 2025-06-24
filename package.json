@@ -9,7 +9,8 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"debug": "node --inspect-brk ./node_modules/.bin/vite dev"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
@@ -36,6 +37,8 @@
 		"@azure/ai-form-recognizer": "^5.0.0",
 		"@azure/identity": "^4.4.0",
 		"@sveltejs/adapter-node": "^5.2.0",
+		"chart.js": "^4.5.0",
+		"chartjs-adapter-date-fns": "^3.0.0",
 		"fs": "^0.0.1-security",
 		"node-cache": "^5.1.2",
 		"stream": "^0.0.3",

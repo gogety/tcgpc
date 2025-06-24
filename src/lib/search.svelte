@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Card from '$lib/card.svelte';
+	import LineChart from './lineChart.svelte';
 	export let showImages: boolean;
 	export let addToCart: Function;
 
@@ -80,7 +81,7 @@
 		<div style="display: flex; justify-content: space-between; align-items: center;">
 			<h3>{selectedCard.SetName}</h3>
 			<span 
-				style="cursor: pointer; font-size: 20px;" 
+			style="cursor: pointer; font-size: 20px;" 
 				on:click={() => {
 					selectedCard = null;
 				}}
@@ -96,37 +97,42 @@
 								<img class="card-image" src={value.Image} alt={selectedCard.SetName} />
 								<div class="card-button">
 									<button
-										on:click={() => {
-											setTimeout(() => (selectedCard = null), 0);
-											addToCart(selectedCard, value);
-										}}
+									on:click={() => {
+										setTimeout(() => (selectedCard = null), 0);
+										addToCart(selectedCard, value);
+									}}
 									>
-										Add {value.Finish} (${value.Price})
-									</button>
-								</div>
+									Add {value.Finish} (${value.Price})
+								</button>
 							</div>
-						</td>
-						{/each}
-					</tr>
-				</table>
+						</div>
+					</td>
+					{/each}
+				</tr>
+			</table>
 			</div>
 		</div>
 		<!-- <button on:click={handleClose}>Close</button> -->
+		<LineChart 
+			card={selectedCard}
+			/>
+	</div>
+	{/if}
+	
+<!-- Fixed search bar -->
+ {#if !selectedCard}
+	<div class="search-bar">
+		<input
+			type="text"
+			bind:value={searchTerm}
+			placeholder="Search..."
+			bind:this={searchInputElement}
+		/>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<!-- svelte-ignore a11y-no-static-element-interactions -->
+		<div class="clear-button" on:click={clearSearch}>✖</div>
 	</div>
 {/if}
-
-<!-- Fixed search bar -->
-<div class="search-bar">
-	<input
-		type="text"
-		bind:value={searchTerm}
-		placeholder="Search..."
-		bind:this={searchInputElement}
-	/>
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div class="clear-button" on:click={clearSearch}>✖</div>
-</div>
 
 <style>
 	input {

@@ -1,5 +1,5 @@
 <script lang=ts>
-	import type { Card } from "./models";
+import type { Card } from "./models";
   export let card: Card;
   export let showImage: boolean;
 

@@ -1,5 +1,7 @@
 export interface Card {
   SetName: string,
+  SetCode: string,
+  CollectorNumber: string,
   ReleaseDate: string,
   Link: string,
   CardName: string,
@@ -8,7 +10,7 @@ export interface Card {
     Price: number,
     InStock: boolean,
     Finish: string,
-  }]
+  }],
   Qualifiers: string[]
 }
 

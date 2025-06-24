@@ -1,18 +1,13 @@
 # create-svelte
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+## After deployment
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
+connect on scm
 ```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
+cd sites/wwwroot/
+cp build/* ./ -r
 ```
+If that doesn't work, rm -rf the wwwroot content and redeploy first.
 
 ## Developing
 
@@ -25,14 +20,18 @@ npm run dev
 npm run dev -- --open
 ```
 
-## Building
+## Debugging server side
 
-To create a production version of your app:
+You can connect a dev tools to your node backend to debug server-side code:
 
 ```bash
-npm run build
+node --inspect-brk node_modules/vite/bin/vite.js dev
 ```
 
-You can preview the production build with `npm run preview`.
+Go in chrome or edge and browse 
+edge://inspect
+
+In the configure option, ensure that the url listed by the command above is set.
+The running inspector should be visible in the list, inspect it to start the app with the dev tools open.
 
 > To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.

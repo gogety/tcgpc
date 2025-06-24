@@ -66,6 +66,8 @@ export async function GET({ url }) {
 
   const cards = data.hits.map((c) => {
     return {
+      SetCode: c._source.variants?.[0]?.sku?.split("-")[2] || "",
+      CollectorNumber: c._source.MTG_Collector_Number || c._source["Collector Number"] || "",
       CardName: c._source["Card Name"],
       Image: c._source.media[0].url,
       SetName: c._source.Set,

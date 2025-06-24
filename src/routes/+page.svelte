@@ -64,7 +64,7 @@
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div class="tab {currentPage === 'cart' ? 'active' : ''}" on:click={() => (currentPage = 'cart')}>
 		<span class="tab-icon"
-			>🛒 Cart
+			>⭐ Saved
 			{#if cart.length > 0}
 				(${totalPrice.toFixed(2)})
 			{/if}
