@@ -9,10 +9,10 @@
 </script>
 
 <h1>
-  Cart
+  Saved
   {#if cart.length > 0}
     (${totalPrice.toFixed(2)})
-    <button on:click={() => clearCart()} style="margin-left: 10px;">Clear Cart</button>
+    <button on:click={() => clearCart()} style="margin-left: 10px;">Clear list</button>
   {/if}
 </h1>
 <table>
