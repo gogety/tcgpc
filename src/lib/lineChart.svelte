@@ -37,11 +37,19 @@
 	onMount(async () => {
 		// const avgData = avg.map(([ts, value]) => ({ x: new Date(ts), y: value }));
 		// const lowData = low.map(([ts, value]) => ({ x: new Date(ts), y: value }));
-		const data = await fetchPriceHistory(card.CardName, card.SetCode, card.CollectorNumber);
-		if (!data) {
-			console.error('No data found for the specified card.');
+		let data;
+		try {
+			data = await fetchPriceHistory(card.CardName, card.SetCode, card.CollectorNumber);
+			// success: use data
+		} catch (err) {
+			console.warn('Failed to fetch price history:', err.message);
 			return;
 		}
+		if (!data || !data.market) {
+			console.warn('Something went wrong getting the price, data is null.');
+			return;
+		}
+
 		const market = data?.market?.map(([ts, value]) => ({ x: new Date(ts), y: value }));
 		const market_foil = data?.market_foil?.map(([ts, value]) => ({ x: new Date(ts), y: value }));
 
